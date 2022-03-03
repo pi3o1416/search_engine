@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+
+{% block title %} Detail {% endblock  %}
+
+{% block body %}
+    <div class="container column is-four-fifths">
+        <h1 class="is-size-2 has-text-info-dark" style="margin-top:3%">{{ searched_item.search_text }}</h1>
+        <p><span class="is-size-5"><strong>{{ searched_item.user.username }}</strong></span> <span class="has-text-gray">{{ searched_item.search_time }}</span></p>
+        <br>
+        <p class="has-text-black-bis is-size-6">
+            <!--- Search Result Should be here --->
+            {{ searched_item.search_text }}
+        </p>
+        
+    </div>
+    
+{% endblock body %}

@@ -2,9 +2,7 @@
 {% extends "base.html" %}
 
 
-{% block title %}
-    List
-{% endblock  %}
+{% block title %} List {% endblock  %}
 
 
 {% block body %}
@@ -15,7 +13,7 @@
             {% if searched_items %}
                 {% for searched_item in searched_items %}
                     <div>
-                        <a href="#">
+                        <a href=" {% url "search_history:detail" searched_item.pk %}">
                             <h1 class="is-size-3 has-text-primary-dark">{{ searched_item.search_text }}</h1>
                         </a>
                     </div>
