@@ -13,10 +13,10 @@
             <header>
                 <nav class="navbar box p-0">
                     <div class="navbar-brand">
-                        <a href="#"> <h1 class="is-size-1 mr-6"><strong>GooGLI!</strong></h1> </a>
+                        <a href="{% url "search_history:list" %}"> <h1 class="is-size-1 mr-6"><strong>GooGLI!</strong></h1> </a>
                     </div>
                     <div class="navbar-start">
-                        <a class="navbar-item has-text-info" href="#}">History List</a>
+                        <a class="navbar-item has-text-info" href="{% url "search_history:list" %}">History List</a>
                     </div>
                 </nav>
             </header>

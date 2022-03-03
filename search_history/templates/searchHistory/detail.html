@@ -8,11 +8,13 @@
         <h1 class="is-size-2 has-text-info-dark" style="margin-top:3%">{{ searched_item.search_text }}</h1>
         <p><span class="is-size-5"><strong>{{ searched_item.user.username }}</strong></span> <span class="has-text-gray">{{ searched_item.search_time }}</span></p>
         <br>
-        <p class="has-text-black-bis is-size-6">
-            <!--- Search Result Should be here --->
-            {{ searched_item.search_text }}
-        </p>
-        
+        <h1 class="is-size-4">Search Result:</h1>
+        {% for key, val in searched_item.search_result.items %}
+            <div class="box column">
+                <h2 class="is-size-5"><strong>{{ val }}</strong></h2>
+                <h6 class="is-size-6">URL: <a href="{{ key }}">{{ key }}</a></h6>
+            </div>
+        {% endfor %}
     </div>
-    
+
 {% endblock body %}
