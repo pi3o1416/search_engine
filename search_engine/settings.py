@@ -131,6 +131,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Custom Settings
 AUTH_USER_MODEL = 'account.CustomUser'
+STATIC_URL = '/static/'
+
 
 
 

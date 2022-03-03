@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+
+
+{% block title %}
+    List
+{% endblock  %}
+
+
+{% block body %}
+    <div class="container">
+        <h1 class="is-size-2 has-text-primary">Search History</h1>
+
+        <div class="box column">
+            {% if searched_items %}
+                {% for searched_item in searched_items %}
+                    <div>
+                        <a href="#">
+                            <h1 class="is-size-3 has-text-primary-dark">{{ searched_item.search_text }}</h1>
+                        </a>
+                    </div>
+                    <p>
+                        {{ searched_item.user.username }} <br>
+                        {{ searched_item.search_time }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}
+
+

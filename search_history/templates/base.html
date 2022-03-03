@@ -1,0 +1,37 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title> {% block title %} {% endblock title %} </title>
+        <link rel="stylesheet" href="{% static "css/bulma.css" %}" type="text/css" media="screen" title="no title" charset="utf-8">
+    </head>
+    <body>
+        <div>
+            <header>
+                <nav class="navbar box p-0">
+                    <div class="navbar-brand">
+                        <a href="#"> <h1 class="is-size-1 mr-6"><strong>GooGLI!</strong></h1> </a>
+                    </div>
+                    <div class="navbar-start">
+                        <a class="navbar-item has-text-info" href="#}">History List</a>
+                    </div>
+                </nav>
+            </header>
+
+            {% block body %}
+
+            {% endblock body %}
+
+            <footer class="has-background-primary" style="margin-top:5%">
+                <h1 class="is-size-1">Footer</h1>
+                <h1 class="is-size-1">Footer</h1>
+            </footer>
+
+        </div>
+    </body>
+</html>
+
+
