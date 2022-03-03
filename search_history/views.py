@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from django.views import View
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import SearchHistory
 
 
@@ -10,7 +11,16 @@ class SearchHistoryList(View):
     template_name = 'searchHistory/list.html'
 
     def get(self, request):
-        return render(request, self.template_name, {'searched_items': self.query_set})
+        paginator = Paginator(self.query_set, 3)
+        page = request.GET.get('page')
+        try:
+            searched_items = paginator.page(page)
+        except PageNotAnInteger:
+            searched_items = paginator.page(1)
+        except EmptyPage:
+            searched_items = paginator.page(paginator.num_pages)
+        return render(request, self.template_name, {'searched_items': searched_items})
+
 
     def post(self, request):
         pass

@@ -24,6 +24,22 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="columns">
+            <div class="column"> </div>
+            <div class="culumn is-4 is-offset-8">
+                {% if searched_items.has_previous %}
+                    <a class="button" href="?page={{ searched_items.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="button">
+                    {{ searched_items.number }}.
+                </span>
+
+                {% if searched_items.has_next %}
+                    <a class="button" href="?page={{ searched_items.next_page_number }}">next</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock body %}
 
