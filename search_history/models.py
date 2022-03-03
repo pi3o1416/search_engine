@@ -24,6 +24,10 @@ class SearchHistory(models.Model):
         verbose_name=_('Search Time'),
     )
 
+    search_result = models.JSONField(
+        verbose_name=_('Search Result Appeared for that perticular search'),
+    )
+
     def __str__(self):
         return self.search_text
 
