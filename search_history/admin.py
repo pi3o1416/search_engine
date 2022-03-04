@@ -1,7 +1,7 @@
 
 
 from django.contrib import admin
-from .models import SearchHistory
+from .models import SearchHistory, KeywordOccurences
 
 # Register your models here.
 
@@ -11,6 +11,11 @@ class SearchHistoryAdmin(admin.ModelAdmin):
     list_filter = ('user', 'search_time')
     search_fields = ('search_text', 'user__username')
     ordering = ('user',)
+
+
+@admin.register(KeywordOccurences)
+class KeywordOccurencesAdmin(admin.ModelAdmin):
+    pass
 
 
 
