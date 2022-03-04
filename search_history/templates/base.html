@@ -16,7 +16,7 @@
                         <a href="{% url "search_history:list" %}"> <h1 class="is-size-1 mr-6"><strong>GooGLI!</strong></h1> </a>
                     </div>
                     <div class="navbar-start">
-                        <a class="navbar-item has-text-info" href="{% url "search_history:list" %}">History List</a>
+                        <a class="navbar-item has-text-info" href=" {% url "search_history:list" %}">History List</a>
                     </div>
                 </nav>
             </header>
@@ -31,6 +31,11 @@
             </footer>
 
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        {% block javascript %}
+
+        {% endblock javascript %}
     </body>
 </html>
 
