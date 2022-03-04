@@ -9,7 +9,7 @@ from django.urls import reverse
 from collections import defaultdict
 
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
+from krovetzstemmer import Stemmer
 from bs4 import BeautifulSoup
 import nltk
 import json
@@ -101,8 +101,8 @@ def tag_sentence_words(text):
     words = [word for word in words if word not in set(stopwords.words('english'))]
 
     #Stemming Text
-    pstammer = PorterStemmer()
-    stemed_words = [pstammer.stem(word) for word in words]
+    stammer = Stemmer()
+    stemed_words = [stammer.stem(word) for word in words]
 
     #determine tag
     tagged_words = nltk.pos_tag(stemed_words)
