@@ -111,7 +111,6 @@ class SearchHistoryList(View):
         keyword_filters.append(Q(date__gte=startDate))
         keyword_filters.append(Q(date__lte=endDate))
 
-        print(history_filters)
 
         self.keywords_dict = top_searched_keywords(keyword_filters)
         return SearchHistory.objects.filter(reduce(__and__, history_filters)).order_by('-search_time')

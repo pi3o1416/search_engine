@@ -50,7 +50,6 @@ class TestHistoryDetail(TestCase):
 
     def test_if_url_exist_in_desire_url(self):
         response = self.client.get('/history/detail/{}/'.format(self.history.pk))
-        print('/history/detail/{}/'.format(self.history.pk))
         self.assertEqual(response.status_code, 200)
 
     def test_if_url_accessable_by_name(self):

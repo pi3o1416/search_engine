@@ -36,10 +36,10 @@ class TestSearchHistory(TestCase):
         self.assertEqual(self.history._meta.get_field('search_time').verbose_name, 'Search time')
 
     def test_search_result_label(self):
-        self.assertEqual(self.history._meta.get_field('search_result').verbose_name, 'Search Result')
+        self.assertEqual(self.history._meta.get_field('search_result').verbose_name, 'Search result')
 
     def test_get_absolute_url(self):
-        self.assertEqual(self.history.get_absolute_url(), '/history/detail/{}'.format(self.history.pk))
+        self.assertEqual(self.history.get_absolute_url(), '/history/detail/{}/'.format(self.history.pk))
 
 
     class TestKeywordsOccurence(TestCase):

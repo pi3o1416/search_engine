@@ -25,24 +25,24 @@ class SearchHistory(models.Model):
     )
 
     search_text = models.CharField(
-        verbose_name=_('User search text'),
+        verbose_name=_('Search text'),
         max_length=200,
         blank=False,
     )
 
     search_time = models.DateTimeField(
-        verbose_name=_('Search Time'),
+        verbose_name=_('Search time'),
     )
 
     search_result = models.JSONField(
-        verbose_name=_('Search Result Appeared for that perticular search'),
+        verbose_name=_('Search result'),
     )
 
     def __str__(self):
         return self.search_text
 
     def get_absolute_url(self):
-        pass
+        return reverse('search_history:detail', args=[self.pk])
 
 
 class KeywordOccurences(models.Model):
@@ -62,7 +62,6 @@ def update_keyword_occurences(sender, instance, **kwargs):
     Update keywordOccurence from search_texts
     """
     tagged_nouns = tag_sentence_words(instance.search_text)
-    print('tagged_nouns:', tagged_nouns)
     date = instance.search_time.date()
     try:
         occurence_obj = KeywordOccurences.objects.get(date=date)
@@ -77,7 +76,6 @@ def update_keyword_occurences(sender, instance, **kwargs):
         keywords_dict[noun] += 1
 
     keywords_json = json.dumps(keywords_dict)
-    print(date, keywords_json)
     occurence_obj.date = date
     occurence_obj.keywords = keywords_json
     occurence_obj.save()
