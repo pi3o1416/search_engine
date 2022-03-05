@@ -1,0 +1,57 @@
+
+
+
+<form id="filterForm" method="post" accept-charset="utf-8" onchange=handelFormChange() onsubmit="handleFormSubmit(event)">
+    {% csrf_token %}
+    <div class="field" onchange="handleSearchKeywordChange()">
+        <label class="label">Search Keyword</label>
+        <div class="control">
+            <input class="input" type="text" value="" name="search" id="search" />
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Top Keywords</label>
+        <input type="radio" value="" name="top_keywords" id="top_keywords" onchange="handleTopKeywordChange()" checked/>
+        None<br>
+        {% for key, val in top_keywords.items %}
+            <input type="radio" value="{{ key }}" name="top_keywords" id="top_keywords" onchange="handleTopKeywordChange()" />
+            {{ key }} ({{ val }} time{{ val|pluralize:"s" }} found) <br />
+
+        {% endfor %}
+    </div>
+
+    <div class="field">
+        <label class="label">Users</label>
+        <input type="radio" value="" name="users" id="users" checked/> All<br>
+        {% for user in users %}
+            <input type="radio" value="{{ user.id }}" name="users" id="users"/> {{ user.username }}<br>
+        {% endfor %}
+    </div>
+
+    <div class="field" onchange="handleDateChange()">
+        <label class="label">Select Date</label>
+        <div class="control">
+            From <input type="date" value="" name="date_from" id="date_from" /> To
+            <input type="date" value="" name="date_to" id="date_to" />
+        </div>
+    </div>
+
+    <div class="field" onchange="handleTimeRangeChange()">
+        <label class="label">Select Time Rnage</label>
+        <div class="control">
+            <label class="radio">
+                <input type="radio" name="time_range" value="" checked />
+                All </label ><br />
+            <label class="radio">
+                <input type="radio" name="time_range" value="24h"/>
+                From Last 24 Hours </label ><br />
+            <label class="radio">
+                <input type="radio" name="time_range" value="7d"/>
+                From Last Week </label ><br />
+            <label class="radio">
+                <input type="radio" name="time_range" value="1m"/>
+                From Last Month<br />
+            </label>
+        </div>
+    </div>
+</form>

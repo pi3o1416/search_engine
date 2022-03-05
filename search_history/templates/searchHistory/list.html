@@ -7,11 +7,15 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="is-size-2 has-text-primary">Search History</h1>
+        <h1 class="is-size-2 has-text-primary mt-2 mb-6">Search History</h1>
 
-        <div class="box column" id="content">
-
-            {% include "searchHistory/content_list.html" %}
+        <div class="columns">
+            <div class="box column is-four-fifths" id="content">
+                {% include "searchHistory/content_list.html" %}
+            </div>
+            <div class="column">
+                {% include "searchHistory/filter_form.html" %}
+            </div>
 
         </div>
     </div>
@@ -21,10 +25,12 @@
 {% block javascript %}
     <script charset="utf-8">
         let current_page = {{ searched_items.number }}
-        console.log(current_page)
+        let postData = {}
+
+        //Validate and fix out of range pageNo
+
 
         function validate_pageNO(pageNo){
-            //Validate and fix out of range pageNo
             let maxPageNo = {{ searched_items.paginator.num_pages }}
             let minPageNo = 1
             if(pageNo > maxPageNo) {
@@ -37,13 +43,14 @@
         }
 
 
+        //Handle Pagination next page without reload
         function handleNextPage() {
-            //Handle Pagination next page without reload
             current_page = validate_pageNO(current_page)
+            postData['page'] = current_page+1
             $.ajax({
                 url: "{% url 'search_history:list' %}",
                 type: 'get',
-                data: {page: current_page + 1},
+                data: postData,
                 success: function (data) {
                     current_page += 1
                     $('#content').html(data)
@@ -51,12 +58,14 @@
             })
         }
 
+        //Handle Pagination next page without reload
         function handlePrevPage() {
-            //Handle Pagination next page without reload
+            current_page = validate_pageNO(current_page)
+            postData['page'] = current_page-1
             $.ajax({
                 url: "{% url 'search_history:list' %}",
                 type: 'get',
-                data: {page: current_page - 1},
+                data: postData,
                 success: function (data) {
                     current_page -= 1
                     $('#content').html(data)
@@ -64,9 +73,60 @@
             })
         }
 
+        function getFormData($form){
+            let unindexed_array = $form.serializeArray();
+            let indexed_array = {};
+
+            $.map(unindexed_array, function(n, i){
+                indexed_array[n['name']] = n['value'];
+            });
+
+            return indexed_array;
+        }
+
+        function handelFormChange() {
+            let $form = $("#filterForm");
+            postData = getFormData($form);
+            current_page = 1;
+            postData['page'] = current_page;
+            $.ajax({
+                url: "{% url 'search_history:list' %}",
+                type: 'get',
+                data: postData,
+                success: function(data){
+                    $('#content').html(data)
+                }
+
+            })
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault()
+        }
+
+        function handleSearchKeywordChange() {
+            let top_keywords = document.getElementsByName('top_keywords')
+            top_keywords[0].checked = true
+        }
+
+        function handleTopKeywordChange() {
+            let search_keywords = document.getElementById('search')
+            search_keywords.value = ''
+        }
+
+        function handleDateChange() {
+            let time_range = document.getElementsByName('time_range')
+            time_range[0].checked = true
+        }
+
+        function handleTimeRangeChange() {
+            let date_from = document.getElementById('date_from')
+            let date_to = document.getElementById('date_to')
+            date_from.value = ''
+            date_to.value = ''
+        }
+
     </script>
-
-
 {% endblock javascript %}
 
 
