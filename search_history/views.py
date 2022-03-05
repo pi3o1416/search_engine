@@ -19,8 +19,7 @@ class SearchHistoryList(View):
     query_set = SearchHistory.objects.all().order_by('-search_time')
     users = get_user_model().objects.all()[:10]
     template_name = 'searchHistory/list.html'
-    keywords_dict = top_searched_keywords()
-
+    keywords_dict = None
     def get(self, request):
         self.query_set = self.get_queryset(request.GET)
         paginator = Paginator(self.query_set, 3)
@@ -35,6 +34,8 @@ class SearchHistoryList(View):
             searched_items = paginator.page(paginator.num_pages)
 
         # Keep only top ten searched keywords
+        if not self.keywords_dict:
+            self.keywords_dict = self.top_searched_keywords()
         self.keywords_dict = dict(
             itertools.islice(self.keywords_dict.items(), 10))
 
@@ -91,7 +92,7 @@ class SearchHistoryList(View):
         keyword_filters.append(Q(date__lte=endDate))
 
 
-        self.keywords_dict = top_searched_keywords(keyword_filters)
+        self.keywords_dict = self.top_searched_keywords(keyword_filters)
         return SearchHistory.objects.filter(reduce(__and__, history_filters)).order_by('-search_time')
 
 
