@@ -14,27 +14,6 @@ import itertools
 from .models import SearchHistory, KeywordOccurences
 
 
-def top_searched_keywords(filters=None, time_range=False):
-    """
-    Return Top 10 searched keywords within a timerange
-    if time_range is False return top searched keywords within last month
-    """
-    if not time_range:
-        firstDate = timezone.now().date() - timezone.timedelta(days=30)
-        lastDate = timezone.now().date()
-        filters = [Q(date__gte=firstDate), Q(date__lte=lastDate)]
-    query_set = KeywordOccurences.objects.filter(reduce(__and__, filters))
-    keywords_dict = defaultdict(int)
-
-    for obj in query_set:
-        obj_keywords = json.loads(obj.keywords)
-        for key, val in obj_keywords.items():
-            keywords_dict[key] += val
-
-    keywords_dict = {key: value for key, value in sorted(
-        keywords_dict.items(), key=lambda item: item[1], reverse=True)}
-    return keywords_dict
-
 
 class SearchHistoryList(View):
     query_set = SearchHistory.objects.all().order_by('-search_time')
@@ -114,6 +93,28 @@ class SearchHistoryList(View):
 
         self.keywords_dict = top_searched_keywords(keyword_filters)
         return SearchHistory.objects.filter(reduce(__and__, history_filters)).order_by('-search_time')
+
+
+    def top_searched_keywords(self, filters=None, time_range=False):
+        """
+        Return Top 10 searched keywords within a timerange
+        if time_range is False return top searched keywords within last month
+        """
+        if not time_range:
+            firstDate = timezone.now().date() - timezone.timedelta(days=30)
+            lastDate = timezone.now().date()
+            filters = [Q(date__gte=firstDate), Q(date__lte=lastDate)]
+        query_set = KeywordOccurences.objects.filter(reduce(__and__, filters))
+        keywords = defaultdict(int)
+
+        for obj in query_set:
+            obj_keywords = json.loads(obj.keywords)
+            for key, val in obj_keywords.items():
+                keywords[key] += val
+
+        keywords = {key: value for key, value in sorted(
+            keywords.items(), key=lambda item: item[1], reverse=True)}
+        return keywords
 
 
 class SearchHistoryDetail(View):
