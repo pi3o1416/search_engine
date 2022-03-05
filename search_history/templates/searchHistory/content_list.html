@@ -2,7 +2,7 @@
 {% if searched_items %}
     {% for searched_item in searched_items %}
         <div>
-            <a href=" {% url "search_history:detail" searched_item.pk %}">
+            <a href=" {% url "search_history:detail" searched_item.pk %}" target="_blank">
                 <h1 class="is-size-3 has-text-primary-dark">{{ searched_item.search_text }}</h1>
             </a>
         </div>
