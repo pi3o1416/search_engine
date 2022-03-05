@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block title %} HomePage {% endblock  %}
+
+
+{% block body %}
+    <div class="container">
+        <h1 class="is-size-2 has-text-info-dark" style="margin-top:3%;margin-bottom:31%">
+            <strong>-> </strong>
+            <a href="{% url "search_history:list" %}">History List</a>
+        </h1>
+    </div>
+
+{% endblock body  %}
+
